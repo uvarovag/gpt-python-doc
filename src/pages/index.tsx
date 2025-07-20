@@ -3,28 +3,52 @@ import Layout from '@theme/Layout'
 import Link from '@docusaurus/Link'
 
 export default function Home() {
-    const [cursorPos, setCursorPos] = useState({ x: 50, y: 50 })
+    const [position, setPosition] = useState({ x: 50, y: 50 })
 
     useEffect(() => {
-        function handleMouseMove(e: MouseEvent) {
-            const x = (e.clientX / window.innerWidth) * 100
-            const y = (e.clientY / window.innerHeight) * 100
-            setCursorPos({ x, y })
+        const handlePointerMove = (e: PointerEvent | TouchEvent) => {
+            const clientX = 'touches' in e ? e.touches[0].clientX : (e as PointerEvent).clientX
+            const clientY = 'touches' in e ? e.touches[0].clientY : (e as PointerEvent).clientY
+
+            const x = (clientX / window.innerWidth) * 100
+            const y = (clientY / window.innerHeight) * 100
+            setPosition({ x, y })
         }
-        window.addEventListener('mousemove', handleMouseMove)
-        return () => window.removeEventListener('mousemove', handleMouseMove)
+
+        window.addEventListener('pointermove', handlePointerMove)
+        window.addEventListener('touchmove', handlePointerMove)
+
+        return () => {
+            window.removeEventListener('pointermove', handlePointerMove)
+            window.removeEventListener('touchmove', handlePointerMove)
+        }
+    }, [])
+
+    useEffect(() => {
+        if (window.DeviceOrientationEvent) {
+            const handleDeviceOrientation = (e: DeviceOrientationEvent) => {
+                if (e.gamma !== null && e.beta !== null) {
+                    const x = 50 + (e.gamma / 90) * 30
+                    const y = 50 + (e.beta / 180) * 30
+                    setPosition({ x, y })
+                }
+            }
+
+            window.addEventListener('deviceorientation', handleDeviceOrientation)
+            return () => window.removeEventListener('deviceorientation', handleDeviceOrientation)
+        }
     }, [])
 
     const backgroundStyle = {
         background: `radial-gradient(
-      circle at ${cursorPos.x}% ${cursorPos.y}%,
-      #5ac8fa 0%,     /* ярко-голубой */
-      #0071e3 40%,    /* насыщенный синий */
-      #5856d6 70%,    /* фиолетово-синий */
-      #af52de 90%,    /* светло-фиолетовый */
-      #5ac8fa 100%
-    )`,
-        transition: 'background-position 0.15s ease',
+            circle at ${position.x}% ${position.y}%,
+            #5ac8fa 0%,
+            #0071e3 40%,
+            #5856d6 70%,
+            #af52de 90%,
+            #5ac8fa 100%
+        )`,
+        transition: 'background-position 0.3s ease-out',
     }
 
     return (
@@ -42,6 +66,7 @@ export default function Home() {
                     padding: '0 20px',
                     height: '100%',
                     minHeight: 'calc(100vh - var(--ifm-navbar-height))',
+                    touchAction: 'none',
                 }}
             >
                 <div className="container" style={{ maxWidth: 800, margin: '0 auto' }}>
