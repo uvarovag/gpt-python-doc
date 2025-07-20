@@ -31,6 +31,7 @@ const config: Config = {
             } satisfies Preset.Options,
         ],
     ],
+    // scripts: ['/analytics.js'],
     themeConfig: {
         navbar: {
             title: 'GPT Python doc',
