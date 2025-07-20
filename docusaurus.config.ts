@@ -4,7 +4,6 @@ import type * as Preset from '@docusaurus/preset-classic'
 
 const config: Config = {
     title: 'GPT Python doc',
-    tagline: 'Документация по Python — быстро, точно, без лишних слов',
     favicon: 'img/favicon.ico',
     url: 'https://gpt-python.doc.ru',
     baseUrl: '/',
@@ -12,6 +11,15 @@ const config: Config = {
     projectName: 'GPT Python doc',
     onBrokenLinks: 'throw',
     onBrokenMarkdownLinks: 'warn',
+    i18n: {
+        defaultLocale: 'ru',
+        locales: ['ru'],
+        localeConfigs: {
+            ru: {
+                label: 'Русский',
+            },
+        },
+    },
     presets: [
         [
             'classic',

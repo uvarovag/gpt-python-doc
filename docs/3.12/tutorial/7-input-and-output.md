@@ -142,7 +142,7 @@ print('Число π приблизительно равно %5.3f.' % math.pi)
 # Число π приблизительно равно 3.142.
 ```
 
-Подробности см. в разделе [printf-style String Formatting](../library/stdtypes.html#old-string-formatting).
+Подробности см. в разделе [printf-style String Formatting](https://docs.python.org/3.12/library/exceptions.html#bltin-exceptions).
 
 ## 7.2. Чтение и запись файлов
 
