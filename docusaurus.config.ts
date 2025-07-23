@@ -31,7 +31,14 @@ const config: Config = {
             } satisfies Preset.Options,
         ],
     ],
-    // scripts: ['/analytics.js'],
+    plugins: [
+        [
+            'docusaurus-plugin-yandex-metrica',
+            {
+                counterID: '103411084',
+            },
+        ],
+    ],
     themeConfig: {
         navbar: {
             title: 'GPT Python doc',
